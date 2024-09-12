@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psychedelic Vibe</title>
     <style>
         body {
             display: flex;
@@ -9,28 +12,35 @@
             height: 100vh;
             margin: 0;
             flex-direction: column;
-            background-color: #f0f0f0;
+            background-color: #1e1e1e;
             overflow: hidden;
             position: relative;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
         }
         
         .button {
             padding: 20px 40px;
             margin: 40px;
             cursor: pointer;
-            background-color: blue;
-            color: white;
+            background-color: #ff69b4;
+            color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             font-size: 32px;
             z-index: 1;
             position: relative;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .button:hover {
+            transform: scale(1.1);
+            background-color: #ff1493;
         }
         
         #displayText {
             display: none;
             font-size: 48px;
-            background-color: pink;
+            background-color: transparent;
             padding: 40px;
             border-radius: 5px;
             text-align: center;
@@ -41,6 +51,8 @@
             opacity: 0;
             transform: scale(0.8);
             transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            color: #00ff00;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
         }
 
         #displayText.show {
@@ -67,7 +79,7 @@
     <button class="button" onclick="showText()">Click Me</button>
 </div>
 
-<p id="displayText">🫵🏻 Gay</p>
+<p id="displayText">🫵 GAY!</p>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
@@ -83,14 +95,14 @@
     particlesJS("particles-js", {
         "particles": {
             "number": {
-                "value": 100,
+                "value": 150,
                 "density": {
                     "enable": true,
                     "value_area": 800
                 }
             },
             "color": {
-                "value": ["#ff0000", "#00ff00", "#0000ff"]
+                "value": ["#ff00ff", "#00ffff", "#ffff00", "#ff69b4"]
             },
             "shape": {
                 "type": "circle",
@@ -100,21 +112,21 @@
                 }
             },
             "opacity": {
-                "value": 0.5,
+                "value": 0.7,
                 "random": true,
                 "anim": {
                     "enable": true,
-                    "speed": 1,
-                    "opacity_min": 0.1,
+                    "speed": 2,
+                    "opacity_min": 0.3,
                     "sync": false
                 }
             },
             "size": {
-                "value": 10,
+                "value": 15,
                 "random": true,
                 "anim": {
                     "enable": true,
-                    "speed": 10,
+                    "speed": 15,
                     "size_min": 0.1,
                     "sync": false
                 }
@@ -124,7 +136,7 @@
             },
             "move": {
                 "enable": true,
-                "speed": 6,
+                "speed": 8,
                 "direction": "none",
                 "random": true,
                 "straight": false,
@@ -142,7 +154,7 @@
             "events": {
                 "onhover": {
                     "enable": true,
-                    "mode": "repulse"
+                    "mode": "bubble"
                 },
                 "onclick": {
                     "enable": true,
@@ -158,7 +170,7 @@
                     }
                 },
                 "bubble": {
-                    "distance": 400,
+                    "distance": 250,
                     "size": 40,
                     "duration": 2,
                     "opacity": 8,
