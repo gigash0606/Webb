@@ -10,8 +10,8 @@
             margin: 0;
             flex-direction: column;
             background-color: #f0f0f0;
-            overflow: hidden; /* Hide overflow to prevent scrollbars */
-            position: relative; /* Set position to relative for z-index to work */
+            overflow: hidden;
+            position: relative;
         }
         
         .button {
@@ -23,8 +23,8 @@
             border: none;
             border-radius: 5px;
             font-size: 32px;
-            z-index: 1; /* Ensure button is above particles */
-            position: relative; /* Set position to relative for z-index to work */
+            z-index: 1;
+            position: relative;
         }
         
         #displayText {
@@ -36,8 +36,17 @@
             text-align: center;
             width: 100%;
             box-sizing: border-box;
-            z-index: 1; /* Ensure text is above particles */
-            position: relative; /* Set position to relative for z-index to work */
+            z-index: 1;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        #displayText.show {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
         }
 
         #particles-js {
@@ -46,13 +55,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Ensure particles are behind content */
+            z-index: 0;
         }
     </style>
 </head>
 <body>
 
-<div id="particles-js"></div> <!-- Particle background -->
+<div id="particles-js"></div>
 
 <div id="content">
     <button class="button" onclick="showText()">Click Me</button>
@@ -64,10 +73,13 @@
 <script>
     function showText() {
         document.getElementById('content').style.display = 'none';
-        document.getElementById('displayText').style.display = 'block';
+        const displayText = document.getElementById('displayText');
+        displayText.style.display = 'block';
+        setTimeout(() => {
+            displayText.classList.add('show');
+        }, 100); // Slight delay to allow transition
     }
 
-    // Initialize particles.js
     particlesJS("particles-js", {
         "particles": {
             "number": {
