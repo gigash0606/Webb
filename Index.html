@@ -16,10 +16,10 @@
             overflow: hidden;
             position: relative;
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Standard Syntax */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         .button {
@@ -84,6 +84,17 @@
             left: 0;
             transition: width 2s linear;
         }
+
+        .quote {
+            font-size: 24px;
+            color: #ffffff;
+            margin: 20px 0;
+        }
+
+        .author {
+            font-size: 20px;
+            color: #ff69b4;
+        }
     </style>
 </head>
 <body>
@@ -96,36 +107,61 @@
     </button>
 </div>
 
-<p id="displayText">🫵 GAY!</p>
+<div id="displayText">
+    <p id="quote" class="quote"></p>
+    <p id="author" class="author"></p>
+</div>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
     const button = document.getElementById('holdButton');
     const progressBar = document.getElementById('progressBar');
+    const displayText = document.getElementById('displayText');
+    const quoteEl = document.getElementById('quote');
+    const authorEl = document.getElementById('author');
     let holdTimeout;
 
+    const API_URL = 'https://api.quotable.io/random';
+
+    const getQuote = async () => {
+        try {
+            const response = await fetch(API_URL);
+            const data = await response.json();
+            const quote = data.content;
+            const author = data.author || 'Unknown';
+            quoteEl.textContent = quote;
+            authorEl.textContent = `~ ${author}`;
+        } catch (error) {
+            console.log(error);
+            quoteEl.textContent = 'Oops! Something went wrong.';
+            authorEl.textContent = '';
+        }
+    };
+
     button.addEventListener('touchstart', () => {
-        progressBar.style.width = '100%'; // Start filling the progress bar
-        holdTimeout = setTimeout(showText, 2000); // Hold for 2 seconds
+        progressBar.style.width = '100%';
+        holdTimeout = setTimeout(() => {
+            getQuote();
+            showText();
+        }, 2000);
     });
 
     button.addEventListener('touchend', () => {
         clearTimeout(holdTimeout);
-        progressBar.style.width = '0'; // Reset the progress bar
+        progressBar.style.width = '0';
     });
 
     button.addEventListener('touchcancel', () => {
         clearTimeout(holdTimeout);
-        progressBar.style.width = '0'; // Reset the progress bar
+        progressBar.style.width = '0';
     });
 
     function showText() {
         document.getElementById('content').style.display = 'none';
-        const displayText = document.getElementById('displayText');
         displayText.style.display = 'block';
         setTimeout(() => {
             displayText.classList.add('show');
-        }, 100); // Slight delay to allow transition
+        }, 100);
     }
 
     particlesJS("particles-js", {
