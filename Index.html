@@ -16,6 +16,10 @@
             overflow: hidden;
             position: relative;
             font-family: 'Comic Sans MS', cursive, sans-serif;
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Standard Syntax */
         }
         
         .button {
@@ -40,7 +44,7 @@
         #displayText {
             display: none;
             font-size: 48px;
-            font-family: Arial, sans-serif; /* Use a standard font here */
+            font-family: Arial, sans-serif;
             background-color: transparent;
             padding: 40px;
             border-radius: 5px;
@@ -70,6 +74,16 @@
             height: 100%;
             z-index: 0;
         }
+
+        #progressBar {
+            width: 0;
+            height: 5px;
+            background-color: #00ff00;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transition: width 2s linear;
+        }
     </style>
 </head>
 <body>
@@ -77,13 +91,34 @@
 <div id="particles-js"></div>
 
 <div id="content">
-    <button class="button" onclick="showText()">Click Me</button>
+    <button class="button" id="holdButton">Hold Me
+        <div id="progressBar"></div>
+    </button>
 </div>
 
 <p id="displayText">🫵 GAY!</p>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
+    const button = document.getElementById('holdButton');
+    const progressBar = document.getElementById('progressBar');
+    let holdTimeout;
+
+    button.addEventListener('touchstart', () => {
+        progressBar.style.width = '100%'; // Start filling the progress bar
+        holdTimeout = setTimeout(showText, 2000); // Hold for 2 seconds
+    });
+
+    button.addEventListener('touchend', () => {
+        clearTimeout(holdTimeout);
+        progressBar.style.width = '0'; // Reset the progress bar
+    });
+
+    button.addEventListener('touchcancel', () => {
+        clearTimeout(holdTimeout);
+        progressBar.style.width = '0'; // Reset the progress bar
+    });
+
     function showText() {
         document.getElementById('content').style.display = 'none';
         const displayText = document.getElementById('displayText');
