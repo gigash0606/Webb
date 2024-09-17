@@ -15,7 +15,7 @@ body {
 
 h1 {
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 32px; /* Increase font size */
 }
 
 button {
@@ -29,15 +29,16 @@ button {
 
 #quoteDisplay {
     margin-top: 20px;
+    z-index: 1; /* Set z-index to ensure text is above particles */
 }
 
 #quote {
-    font-size: 18px;
+    font-size: 24px; /* Increase font size */
     margin-bottom: 10px;
 }
 
 #author {
-    font-size: 14px;
+    font-size: 16px;
     color: #888;
 }
 
