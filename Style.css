@@ -15,7 +15,7 @@ body {
 
 h1 {
     margin-bottom: 20px;
-    font-size: 32px; /* Increase font size */
+    font-size: 24px;
 }
 
 button {
@@ -29,16 +29,15 @@ button {
 
 #quoteDisplay {
     margin-top: 20px;
-    z-index: 1; /* Ensure text is above particles */
 }
 
 #quote {
-    font-size: 28px; /* Increase font size */
+    font-size: 18px;
     margin-bottom: 10px;
 }
 
 #author {
-    font-size: 18px;
+    font-size: 14px;
     color: #888;
 }
 
@@ -47,7 +46,6 @@ button {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.8);
     pointer-events: none;
-    z-index: 0; /* Ensure particles are behind text */
 }
 
 @keyframes float {
