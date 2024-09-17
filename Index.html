@@ -82,13 +82,11 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            transition: width 2s linear;
         }
 
         .quote {
             font-size: 24px;
             color: #ffffff;
-            margin: 20px 0;
         }
 
         .author {
@@ -121,147 +119,65 @@
     const authorEl = document.getElementById('author');
     let holdTimeout;
 
-    const API_URL = 'https://api.quotable.io/random';
+    const customText = "The universe is within you!";
+    const customAuthor = "~ Rumi";
 
-    const getQuote = async () => {
-        try {
-            const response = await fetch(API_URL);
-            const data = await response.json();
-            const quote = data.content;
-            const author = data.author || 'Unknown';
-            quoteEl.textContent = quote;
-            authorEl.textContent = `~ ${author}`;
-        } catch (error) {
-            console.log(error);
-            quoteEl.textContent = 'Oops! Something went wrong.';
-            authorEl.textContent = '';
-        }
-    };
-
-    button.addEventListener('touchstart', () => {
+    function startHold() {
+        progressBar.style.transition = 'width 2s linear';
         progressBar.style.width = '100%';
         holdTimeout = setTimeout(() => {
-            getQuote();
-            showText();
+          quoteEl.textContent = customText; 
+          authorEl.textContent = customAuthor; 
+          showText();
         }, 2000);
-    });
+    }
 
-    button.addEventListener('touchend', () => {
+    function cancelHold() {
         clearTimeout(holdTimeout);
+        progressBar.style.transition = 'none';
         progressBar.style.width = '0';
-    });
+    }
 
-    button.addEventListener('touchcancel', () => {
-        clearTimeout(holdTimeout);
-        progressBar.style.width = '0';
+    button.addEventListener('mousedown', startHold);
+    button.addEventListener('mouseup', cancelHold);
+    button.addEventListener('mouseleave', cancelHold);
+
+    // Add touch event listeners for mobile devices
+    button.addEventListener('touchstart', (event) => {
+      event.preventDefault(); // Prevent default touch behavior
+      startHold();
+    });
+    
+    button.addEventListener('touchend', (event) => {
+      event.preventDefault(); // Prevent default touch behavior
+      cancelHold();
     });
 
     function showText() {
         document.getElementById('content').style.display = 'none';
         displayText.style.display = 'block';
         setTimeout(() => {
-            displayText.classList.add('show');
+          displayText.classList.add('show');
         }, 100);
     }
 
     particlesJS("particles-js", {
-        "particles": {
-            "number": {
-                "value": 150,
-                "density": {
-                    "enable": true,
-                    "value_area": 800
-                }
-            },
-            "color": {
-                "value": ["#ff00ff", "#00ffff", "#ffff00", "#ff69b4"]
-            },
-            "shape": {
-                "type": "circle",
-                "stroke": {
-                    "width": 0,
-                    "color": "#000000"
-                }
-            },
-            "opacity": {
-                "value": 0.7,
-                "random": true,
-                "anim": {
-                    "enable": true,
-                    "speed": 2,
-                    "opacity_min": 0.3,
-                    "sync": false
-                }
-            },
-            "size": {
-                "value": 15,
-                "random": true,
-                "anim": {
-                    "enable": true,
-                    "speed": 15,
-                    "size_min": 0.1,
-                    "sync": false
-                }
-            },
-            "line_linked": {
-                "enable": false
-            },
-            "move": {
-                "enable": true,
-                "speed": 8,
-                "direction": "none",
-                "random": true,
-                "straight": false,
-                "out_mode": "out",
-                "bounce": false,
-                "attract": {
-                    "enable": false,
-                    "rotateX": 600,
-                    "rotateY": 1200
-                }
-            }
-        },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": true,
-                    "mode": "bubble"
-                },
-                "onclick": {
-                    "enable": true,
-                    "mode": "push"
-                },
-                "resize": true
-            },
-            "modes": {
-                "grab": {
-                    "distance": 400,
-                    "line_linked": {
-                        "opacity": 1
-                    }
-                },
-                "bubble": {
-                    "distance": 250,
-                    "size": 40,
-                    "duration": 2,
-                    "opacity": 8,
-                    "speed": 3
-                },
-                "repulse": {
-                    "distance": 200,
-                    "duration": 0.4
-                },
-                "push": {
-                    "particles_nb": 4
-                },
-                "remove": {
-                    "particles_nb": 2
-                }
-            }
-        },
-        "retina_detect": true
-    });
+      "particles": {
+          "number": { "value": 150, "density": { "enable": true, "value_area": 800 } },
+          "color": { "value": ["#ff00ff", "#00ffff", "#ffff00", "#ff69b4"] },
+          "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" } },
+          "opacity": { "value": 0.7, "random": true, "anim": { "enable": true, "speed":2, "opacity_min":0.3, "sync":false } },
+          "size": { "value":15, "random":true,"anim":{"enable":true,"speed":15,"size_min":0.1,"sync":false} },
+          "line_linked":{"enable":false},
+          "move":{"enable":true,"speed":8,"direction":"none","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}
+      },
+      "interactivity":{
+          "detect_on":"canvas",
+          "events":{"onhover":{"enable":true,"mode":"bubble"},"onclick":{"enable":true,"mode":"push"},"resize":true},
+          "modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":250,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}
+      },
+      "retina_detect": true
+   });
 </script>
 
 </body>
