@@ -2,8 +2,7 @@ const button = document.getElementById('clickButton');
 const quoteElement = document.getElementById('quote');
 const authorElement = document.getElementById('author');
 
-const quotes = [
-    { text: "The only way to make sense out of change is to plunge into it, move with it, and join the dance.", author: "~ Alan Watts" },
+const quotes = [ { text: "The only way to make sense out of change is to plunge into it, move with it, and join the dance.", author: "~ Alan Watts" },
     { text: "Life is not a problem to be solved, but a mystery to be lived.", author: "~ Alan Watts" },
     { text: "The best way to predict the future is to invent it.", author: "~ Alan Kay" },
     { text: "The only limit to our realization of tomorrow is our doubts of today.", author: "~ Franklin D. Roosevelt" },
@@ -48,13 +47,7 @@ const quotes = [
     { text: "Believe you can and you're halfway there.", author: "~ Theodore Roosevelt" },
     { text: "The journey of a thousand miles begins with one step.", author: "~ Lao Tzu" },
     { text: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "~ Ralph Waldo Emerson" }
-];
-
-];
-
-];
-
-];
+]; // Replace with your quotes
 
 function getRandomQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
