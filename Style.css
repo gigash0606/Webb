@@ -1,15 +1,21 @@
 body {
-    text-align: center;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background: linear-gradient(to bottom, #000000, #141e30);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .container {
-    padding: 20px;
+    text-align: center;
 }
 
 h1 {
     margin-bottom: 20px;
+    font-size: 24px;
 }
 
 button {
