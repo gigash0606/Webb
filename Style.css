@@ -34,3 +34,16 @@ button {
     font-size: 14px;
     color: #888;
 }
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-10px) translateX(10px); }
+    100% { transform: translateY(0) translateX(0); }
+}
