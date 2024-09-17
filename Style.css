@@ -29,16 +29,16 @@ button {
 
 #quoteDisplay {
     margin-top: 20px;
-    z-index: 1; /* Set z-index to ensure text is above particles */
+    z-index: 1; /* Ensure text is above particles */
 }
 
 #quote {
-    font-size: 24px; /* Increase font size */
+    font-size: 28px; /* Increase font size */
     margin-bottom: 10px;
 }
 
 #author {
-    font-size: 16px;
+    font-size: 18px;
     color: #888;
 }
 
@@ -47,6 +47,7 @@ button {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.8);
     pointer-events: none;
+    z-index: 0; /* Ensure particles are behind text */
 }
 
 @keyframes float {
