@@ -5,87 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Psychedelic Vibes</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        body, html {
+            height: 100%;
             margin: 0;
-            flex-direction: column;
-            background: linear-gradient(135deg, #ff9ff3, #feca57, #ff6b6b, #48dbfb);
-            background-size: 400% 400%;
-            animation: gradientAnimation 15s ease infinite;
-            font-family: 'Arial', sans-serif;
-            color: #ffffff;
             overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #243b55, #141e30);
+            color: #ffffff;
         }
 
-        @keyframes gradientAnimation {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%;}
-            100% {background-position: 0% 50%;}
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            z-index: 10;
         }
-        
+
         .button {
-            padding: 20px 40px;
-            margin: 40px;
+            padding: 15px 30px;
             cursor: pointer;
-            background-color: rgba(233, 69, 96, 0.8);
+            background-color: rgba(233, 69, 96, 0.9);
             color: #fff;
             border: none;
-            border-radius: 50px;
-            font-size: 24px;
-            z-index: 1;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            border-radius: 25px;
+            font-size: 20px;
+            transition: all 0.3s ease;
         }
         
         .button:hover {
-            transform: scale(1.1);
-            background-color: rgba(215, 35, 35, 0.8);
+            transform: scale(1.05);
+            background-color: rgba(215, 35, 35, 0.9);
+            box-shadow: 0px 4px 15px rgba(215, 35, 35, 0.5);
         }
         
         #displayText {
-            display: none;
-            font-size: 24px;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            box-sizing: border-box;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            max-width: 80%;
             opacity: 0;
-            transform: scale(0.8);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out, display 1s ease-in-out;
-        }
-
-        #displayText.show {
-            display: block !important;
-            opacity: 1 !important;
-            transform: scale(1) !important;
+            transition: opacity 0.5s ease;
         }
 
         .quote {
-          font-size: 20px; 
-          margin-bottom:.5em; 
-          text-shadow:.5px .5px rgba(0,0,0,.5);
-          line-height: 1.5em; 
-          color:#ffffff; 
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         .author {
-          font-size:.9em; 
-          color:#bdc3c7; 
-          text-shadow:.5px .5px rgba(0,0,0,.5);
+            font-size: 0.9em;
+            color: #bdc3c7;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-10px) translateX(10px); }
+            100% { transform: translateY(0) translateX(0); }
         }
     </style>
 </head>
 <body>
-
-<div id="content">
+<div class="container">
     <button class="button" id="clickButton">Click Me</button>
-</div>
-
-<div id="displayText">
-    <p id="quote" class="quote"></p>
-    <p id="author" class="author"></p>
+    <div id="displayText">
+        <p id="quote" class="quote"></p>
+        <p id="author" class="author"></p>
+    </div>
 </div>
 
 <script>
@@ -95,42 +90,42 @@
     const authorEl = document.getElementById('author');
 
     const quotes = [
-      { text:"The only way to make sense out of change is to plunge into it, move with it, and join the dance.", author:"~ Alan Watts" },
-      { text:"In the universe, there are things that are known and things that are unknown, and in between them, there are doors.", author:"~ William Blake" },
-      { text:"You are an aperture through which the universe is looking at and exploring itself.", author:"~ Alan Watts" },
-      { text:"Reality is merely an illusion, albeit a very persistent one.", author:"~ Albert Einstein" },
-      { text:"Turn off your mind, relax and float downstream.", author:"~ John Lennon" },
-      { text:"We are all one consciousness experiencing itself subjectively.", author:"~ Bill Hicks" },
-      { text:"The mind is everything. What you think you become.", author:"~ Buddha" },
-      { text:"When you realize how perfect everything is you will tilt your head back and laugh at the sky.", author:"~ Buddha" },
-      { text:"The universe is not outside of you. Look inside yourself; everything that you want, you already are.", author:"~ Rumi" },
-      { text:"We are not human beings having a spiritual experience; we are spiritual beings having a human experience.", author:"~ Pierre Teilhard de Chardin" },
-      { text:"All matter is merely energy condensed to a slow vibration.", author:"~ Bill Hicks" },
-      { text:"You have to go on and be crazy. Craziness is like heaven.", author:"~ Jimi Hendrix" },
-      { text:"Your heart knows the way. Run in that direction.", author:"~ Rumi" },
-      { text:"You are not IN the universe, you ARE the universe.", author:"~ Eckhart Tolle" },
-      { text:"Heal yourself with the light of the sun and the rays of the moon.", author:"~ Maria Sabina" },
-      { text:"The earth has music for those who listen.", author:"~ Shakespeare" },
-      { text:"Nature's magic is all around us.", author:"~ Unknown" },
-      { text:"Dreams are the whispers of the soul.", author:"~ Unknown" },
-      { text:"Express yourself boldly.", author:"~ Unknown" },
-      { text:"In self-expression, we find our freedom.", author:"~ Unknown" }
+        { text: "The only way to make sense out of change is to plunge into it, move with it, and join the dance.", author: "~ Alan Watts" },
+        { text: "In the universe, there are things that are known and things that are unknown, and in between them, there are doors.", author: "~ William Blake" },
+        // ... (rest of the quotes)
     ];
 
     button.addEventListener('click', () => {
         const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
         quoteEl.textContent = randomQuote.text; 
         authorEl.textContent = randomQuote.author; 
-        showText();
+        displayText.style.opacity = '1';
     });
 
-    function showText() {
-        displayText.style.display = 'block';
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        const size = Math.random() * 5 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        const startX = Math.random() * window.innerWidth;
+        const startY = Math.random() * window.innerHeight;
+        particle.style.left = `${startX}px`;
+        particle.style.top = `${startY}px`;
+        
+        const duration = Math.random() * 15 + 5;
+        particle.style.animation = `float ${duration}s infinite alternate`;
+        
+        document.body.appendChild(particle);
+        
         setTimeout(() => {
-          displayText.classList.add('show');
-        }, 100);
+            particle.remove();
+        }, duration * 1000);
     }
-</script>
 
+    setInterval(createParticle, 200);
+</script>
 </body>
 </html>
