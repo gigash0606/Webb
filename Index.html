@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Psychedelic Vibe</title>
+    <title>Psychedelic Vibes</title>
     <style>
         body {
             display: flex;
@@ -12,97 +12,75 @@
             height: 100vh;
             margin: 0;
             flex-direction: column;
-            background-color: #1e1e1e;
+            background: linear-gradient(135deg, #ff9ff3, #feca57, #ff6b6b, #48dbfb);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
             overflow: hidden;
-            position: relative;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+        }
+
+        @keyframes gradientAnimation {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
         }
         
         .button {
             padding: 20px 40px;
             margin: 40px;
             cursor: pointer;
-            background-color: #ff69b4;
+            background-color: rgba(233, 69, 96, 0.8);
             color: #fff;
             border: none;
             border-radius: 50px;
-            font-size: 32px;
+            font-size: 24px;
             z-index: 1;
-            position: relative;
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
         
         .button:hover {
             transform: scale(1.1);
-            background-color: #ff1493;
+            background-color: rgba(215, 35, 35, 0.8);
         }
         
         #displayText {
             display: none;
-            font-size: 48px;
-            font-family: Arial, sans-serif;
-            background-color: transparent;
-            padding: 40px;
-            border-radius: 5px;
-            text-align: center;
-            width: 100%;
+            font-size: 24px;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
             box-sizing: border-box;
-            z-index: 1;
-            position: relative;
             opacity: 0;
             transform: scale(0.8);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-            color: #00ff00;
-            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out, display 1s ease-in-out;
         }
 
         #displayText.show {
-            display: block;
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        #particles-js {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        #progressBar {
-            width: 0;
-            height: 5px;
-            background-color: #00ff00;
-            position: absolute;
-            bottom: 0;
-            left: 0;
+            display: block !important;
+            opacity: 1 !important;
+            transform: scale(1) !important;
         }
 
         .quote {
-            font-size: 24px;
-            color: #ffffff;
+          font-size: 20px; 
+          margin-bottom:.5em; 
+          text-shadow:.5px .5px rgba(0,0,0,.5);
+          line-height: 1.5em; 
+          color:#ffffff; 
         }
 
         .author {
-            font-size: 20px;
-            color: #ff69b4;
+          font-size:.9em; 
+          color:#bdc3c7; 
+          text-shadow:.5px .5px rgba(0,0,0,.5);
         }
     </style>
 </head>
 <body>
 
-<div id="particles-js"></div>
-
 <div id="content">
-    <button class="button" id="holdButton">Hold Me
-        <div id="progressBar"></div>
-    </button>
+    <button class="button" id="clickButton">Click Me</button>
 </div>
 
 <div id="displayText">
@@ -110,74 +88,48 @@
     <p id="author" class="author"></p>
 </div>
 
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    const button = document.getElementById('holdButton');
-    const progressBar = document.getElementById('progressBar');
+    const button = document.getElementById('clickButton');
     const displayText = document.getElementById('displayText');
     const quoteEl = document.getElementById('quote');
     const authorEl = document.getElementById('author');
-    let holdTimeout;
 
-    const customText = "The universe is within you!";
-    const customAuthor = "~ Rumi";
+    const quotes = [
+      { text:"The only way to make sense out of change is to plunge into it, move with it, and join the dance.", author:"~ Alan Watts" },
+      { text:"In the universe, there are things that are known and things that are unknown, and in between them, there are doors.", author:"~ William Blake" },
+      { text:"You are an aperture through which the universe is looking at and exploring itself.", author:"~ Alan Watts" },
+      { text:"Reality is merely an illusion, albeit a very persistent one.", author:"~ Albert Einstein" },
+      { text:"Turn off your mind, relax and float downstream.", author:"~ John Lennon" },
+      { text:"We are all one consciousness experiencing itself subjectively.", author:"~ Bill Hicks" },
+      { text:"The mind is everything. What you think you become.", author:"~ Buddha" },
+      { text:"When you realize how perfect everything is you will tilt your head back and laugh at the sky.", author:"~ Buddha" },
+      { text:"The universe is not outside of you. Look inside yourself; everything that you want, you already are.", author:"~ Rumi" },
+      { text:"We are not human beings having a spiritual experience; we are spiritual beings having a human experience.", author:"~ Pierre Teilhard de Chardin" },
+      { text:"All matter is merely energy condensed to a slow vibration.", author:"~ Bill Hicks" },
+      { text:"You have to go on and be crazy. Craziness is like heaven.", author:"~ Jimi Hendrix" },
+      { text:"Your heart knows the way. Run in that direction.", author:"~ Rumi" },
+      { text:"You are not IN the universe, you ARE the universe.", author:"~ Eckhart Tolle" },
+      { text:"Heal yourself with the light of the sun and the rays of the moon.", author:"~ Maria Sabina" },
+      { text:"The earth has music for those who listen.", author:"~ Shakespeare" },
+      { text:"Nature's magic is all around us.", author:"~ Unknown" },
+      { text:"Dreams are the whispers of the soul.", author:"~ Unknown" },
+      { text:"Express yourself boldly.", author:"~ Unknown" },
+      { text:"In self-expression, we find our freedom.", author:"~ Unknown" }
+    ];
 
-    function startHold() {
-        progressBar.style.transition = 'width 2s linear';
-        progressBar.style.width = '100%';
-        holdTimeout = setTimeout(() => {
-          quoteEl.textContent = customText; 
-          authorEl.textContent = customAuthor; 
-          showText();
-        }, 2000);
-    }
-
-    function cancelHold() {
-        clearTimeout(holdTimeout);
-        progressBar.style.transition = 'none';
-        progressBar.style.width = '0';
-    }
-
-    button.addEventListener('mousedown', startHold);
-    button.addEventListener('mouseup', cancelHold);
-    button.addEventListener('mouseleave', cancelHold);
-
-    // Add touch event listeners for mobile devices
-    button.addEventListener('touchstart', (event) => {
-      event.preventDefault(); // Prevent default touch behavior
-      startHold();
-    });
-    
-    button.addEventListener('touchend', (event) => {
-      event.preventDefault(); // Prevent default touch behavior
-      cancelHold();
+    button.addEventListener('click', () => {
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        quoteEl.textContent = randomQuote.text; 
+        authorEl.textContent = randomQuote.author; 
+        showText();
     });
 
     function showText() {
-        document.getElementById('content').style.display = 'none';
         displayText.style.display = 'block';
         setTimeout(() => {
           displayText.classList.add('show');
         }, 100);
     }
-
-    particlesJS("particles-js", {
-      "particles": {
-          "number": { "value": 150, "density": { "enable": true, "value_area": 800 } },
-          "color": { "value": ["#ff00ff", "#00ffff", "#ffff00", "#ff69b4"] },
-          "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" } },
-          "opacity": { "value": 0.7, "random": true, "anim": { "enable": true, "speed":2, "opacity_min":0.3, "sync":false } },
-          "size": { "value":15, "random":true,"anim":{"enable":true,"speed":15,"size_min":0.1,"sync":false} },
-          "line_linked":{"enable":false},
-          "move":{"enable":true,"speed":8,"direction":"none","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}
-      },
-      "interactivity":{
-          "detect_on":"canvas",
-          "events":{"onhover":{"enable":true,"mode":"bubble"},"onclick":{"enable":true,"mode":"push"},"resize":true},
-          "modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":250,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}
-      },
-      "retina_detect": true
-   });
 </script>
 
 </body>
